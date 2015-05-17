@@ -1,0 +1,12 @@
+---
+- name: Set up a RServer workstation
+  hosts: all
+  remote_user: root
+  sudo: true
+
+  roles:
+    - common
+    - nginx
+    - rserver
+    - shiny
+    - ftp

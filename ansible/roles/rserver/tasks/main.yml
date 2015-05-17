@@ -1,0 +1,25 @@
+---
+- name: Add Rstudio repository key
+  apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9 state=present
+
+- name: Add RStudio repository
+  apt_repository: repo='deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' state=present update_cache=true
+
+- name: Install R
+  apt: name={{ item }} state=present
+  with_items:
+    - r-base
+    - libxml2-dev
+    - libcurl4-gnutls-dev
+    - libcurl4-openssl-dev
+    - libapparmor1
+    - gdebi-core
+
+- name: Download RServer
+  get_url: url=http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb dest=/tmp/rstudio.deb
+
+- name: Install RServer
+  command: gdebi /tmp/rstudio.deb -n
+
+- name: Install Devtools package
+  command: su - -c "R -e \"install.packages('devtools', repos='http://cran.rstudio.com/')\""

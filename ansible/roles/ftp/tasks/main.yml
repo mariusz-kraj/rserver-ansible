@@ -1,0 +1,9 @@
+---
+- name: Install Ftp Server
+  apt: name=vsftpd state=present
+
+- name: Allow user upload
+  lineinfile: dest=/etc/vsftpd.conf regexp='^#write_enable' line='write_enable=YES'
+  lineinfile: dest=/etc/vsftpd.conf line='chroot_local_user=YES' state=present
+#  lineinfile: dest=/etc/vsftpd.conf line='ssl_enable=Yes' state=present
+  notify: restart ftp

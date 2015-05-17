@@ -1,0 +1,11 @@
+---
+- name: Install Nginx
+  apt: name=nginx state=present
+
+- name: Copy main configuration file
+  copy: src=nginx.conf dest=/etc/nginx/nginx.conf
+  notify: restart nginx
+
+- name: Copy main host file
+  copy: src=default.host dest=/etc/nginx/sites-available/default
+  notify: restart nginx

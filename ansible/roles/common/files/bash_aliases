@@ -1,0 +1,4 @@
+alias cdn='cd /usr/share/nginx/www'
+alias cdnf='cd /usr/share/nginx/www/app'
+alias u='phpunit -c app/'
+alias sf='php app/console'

@@ -1,0 +1,28 @@
+---
+- name: Installing packages
+  apt: name={{ item }} state=present
+  with_items:
+    - mc
+    - unzip
+    - git
+    - python-pip
+    - python-dev
+    - libmysqlclient-dev
+
+- name: Copy bash configuration
+  copy: src=bashrc dest={{ item }} backup=true
+  with_items:
+    - "/home/vagrant/.bashrc"
+    - "/root/.bashrc"
+
+- name: Copy bash aliases
+  copy: src=bash_aliases dest={{ item }} backup=true
+  with_items:
+    - "/home/vagrant/.bash_aliases"
+    - "/root/.bash_aliases"
+
+- name: Add group
+  group: name=rdev state=present
+
+- name: Add user
+  user: name=rdev comment="R developer" shell=/bin/bash groups=rdev,admin password="$6$SUg5hmuInHM4g$.H8PyadAOHHuo5xUGp1Gu0aq8AGPg1FHX0bZ6nE8eagtKZAinlu3dVFfJYQbQeY7qZMhq0bfcgcuo3gzFqoB9/"
